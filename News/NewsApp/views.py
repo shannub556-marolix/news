@@ -7,13 +7,14 @@ def input(request):
     main_page = requests.get(url).json()
     article = main_page['articles']
     head = []
+    data=[]
     for ar in article:
         head.append(ar["description"])
-    print(head)
     for i in range(6):
+        data.append(head[i])
         print(f'{i + 1} {head[i]}')
         print()
     if request.method=="GET":
 
-        return render(request,'base.html')
-    return render(request,'base.html')
+        return render(request,'base.html',{'data':data})
+    return render(request,'base.html',{'data':data})

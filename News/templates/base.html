@@ -3,10 +3,64 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <style>
+        /* Style for the navbar */
+        .navbar {
+            overflow: hidden;
+            background-color: #333; /* Change this to your desired background color */
+            position: fixed;
+            top: 0;
+            width: 100%;
+        }
+
+        /* Style for the search input */
+        .search-container {
+            float: right;
+            padding: 10px;
+        }
+
+        .search-container input[type=text] {
+            padding: 6px;
+            margin-top: 8px;
+            font-size: 17px;
+            border: none;
+            border-radius: 5px;
+        }
+
+        /* Style for the content area */
+        #content {
+            margin-top: 60px; /* Adjust this value to match the height of your navbar */
+            display: grid;
+            grid-template-columns: repeat(2, 1fr); /* Two columns, each taking equal space */
+            gap: 10px; /* Adjust the gap between items */
+        }
+
+        #content .under {
+            box-sizing: border-box;
+            padding: 10px;
+        }
+    </style>
 </head>
 <body>
-<h1>Hello this is page </h1>
 
+<!-- Navbar -->
+<div class="navbar">
+    <div class="search-container">
+        <form action="#">
+            <input type="text" placeholder="Search.." name="search">
+        </form>
+    </div>
+</div>
+
+<!-- Content area -->
+<div id="content">
+     <h1>Featured Voices</h1><br>
+    {% for item in data %}
+    <div class="under">
+        <p>{{ item }}</p>
+    </div>
+    {% endfor %}
+</div>
 
 </body>
 </html>
