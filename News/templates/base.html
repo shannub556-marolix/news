@@ -2,65 +2,126 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
-    <style>
-        /* Style for the navbar */
-        .navbar {
-            overflow: hidden;
-            background-color: #333; /* Change this to your desired background color */
-            position: fixed;
-            top: 0;
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>News App - Shanmukha's</title>
+       <style>
+        /* Basic styling */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+        header, footer {
+            background-color: #333;
+            color: #fff;
+            text-align: center;
+            padding: 10px 0;
+        }
+        main {
+            padding: 20px;
+            display: flex;
+            justify-content: center; /* Center the main content horizontally */
+        }
+
+        /* Responsive layout */
+        @media only screen and (min-width: 600px) {
+            header, footer {
+                padding: 20px 0;
+            }
+            main {
+                padding: 40px;
+                flex-wrap: wrap;
+            }
+            #content {
+                flex: 0 0 65%; /* Adjusted to give some gap between main content and sidebar */
+                max-width: 700px;
+            }
+            #sidebar {
+                flex: 0 0 30%; /* Adjusted to fit the sidebar content */
+                max-width: 300px;
+                margin-left: 5%; /* Added margin between content and sidebar */
+            }
+            #content > div {
+                margin-bottom: 20px; /* Added gap between contents in main content */
+            }
+        }
+        /* Additional styles */
+        .card {
+            background-color: #f9f9f9;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            margin-right: 10px; /* Added margin between cards */
+            margin-bottom: 20px;
+            padding: 20px;
+            width: 100%; /* Ensure cards take full width on smaller screens */
+        }
+        .card img {
             width: 100%;
-        }
-
-        /* Style for the search input */
-        .search-container {
-            float: right;
-            padding: 10px;
-        }
-
-        .search-container input[type=text] {
-            padding: 6px;
-            margin-top: 8px;
-            font-size: 17px;
-            border: none;
-            border-radius: 5px;
-        }
-
-        /* Style for the content area */
-        #content {
-            margin-top: 60px; /* Adjust this value to match the height of your navbar */
-            display: grid;
-            grid-template-columns: repeat(2, 1fr); /* Two columns, each taking equal space */
-            gap: 10px; /* Adjust the gap between items */
-        }
-
-        #content .under {
-            box-sizing: border-box;
-            padding: 10px;
+            height: auto;
+            margin-bottom: 10px; /* Added margin below images */
         }
     </style>
+    <script>
+        window.alert('CLick on Title, Image or Latest stories to open Article')
+    document.addEventListener('DOMContentLoaded', function() {
+        var titles = document.querySelectorAll('.title');
+        var images = document.querySelectorAll('.image');
+
+        titles.forEach(function(title) {
+            title.addEventListener('click', function() {
+                var url = this.getAttribute('data-url');
+                window.open(url, '_blank');
+            });
+        });
+
+        images.forEach(function(image) {
+            image.addEventListener('click', function() {
+                var url = this.getAttribute('data-url');
+                window.open(url, '_blank');
+            });
+        });
+    });
+</script>
+
 </head>
 <body>
 
-<!-- Navbar -->
-<div class="navbar">
-    <div class="search-container">
-        <form action="#">
-            <input type="text" placeholder="Search.." name="search">
-        </form>
-    </div>
-</div>
+<header>
+    <h1>Welcome to News App</h1>
+</header>
 
-<!-- Content area -->
-<div id="content">
-     <h1>Featured Voices</h1><br>
-    {% for item in data %}
-    <div class="under">
-        <p>{{ item }}</p>
+<main>
+    <div id="content">
+        <h1>Featured Voices</h1>
+        <div>
+            <!-- Place your main content here -->
+            {% for item in data.data %}
+    <div>
+        <h3 class="title" data-url="{{ item.url }}">{{ item.title }}</h3>
+        <img class="image" src="{{ item.urlToImage }}" alt="Image" style="max-width: 85%; height: auto;" data-url="{{ item.url }}">
+        <p>Published at: {{ item.publishedAt }}</p>
+        <p>{{ item.description }} <a href="{{ item.url }}" target="_blank">read more</a></p>
+        <br><br>
     </div>
     {% endfor %}
-</div>
+        </div>
+    </div>
+    <div id="sidebar">
+        <h1>Latest Stories</h1>
+        <div>
+            <!-- Place your sidebar content here -->
+            {% for item in data.head %}
+            <p class="title" data-url="{{ item.url }}">{{ item.title }} <br> {{ item.publishedAt }}</p>
+            {% endfor %}
+        </div>
+    </div>
+</main>
+
+<footer>
+    <p>&copy; 2024 News App. All rights reserved.</p>
+</footer>
 
 </body>
 </html>
